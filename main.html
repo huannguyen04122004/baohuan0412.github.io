@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Huan Nguyen | Portfolio</title>
+  <link rel="stylesheet" href="C:\Users\baohuan0412\Desktop\Website\main.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-grid">
+      <div>
+        <p class="kicker">UC Berkeley EECS • Semiconductors • Embedded • EV</p>
+        <h1>Huan Nguyen</h1>
+        <p class="subtitle">
+          I build engineering projects across device physics, embedded systems, and EV-focused hardware.
+          Here are selected projects with reports, slides, and media.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn" href="assets/docs/Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+          <a class="btn" href="mailto:youremail@example.com">Email</a>
+        </div>
+
+        <div class="link-row">
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+          <span>•</span>
+          <a href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <img class="avatar" src="assets/img/headshot.jpg" alt="Headshot" onerror="this.style.display='none'">
+        <div class="hero-card-body">
+          <h2>Featured</h2>
+          <p class="muted">A quick highlight reel of what I’ve been building recently.</p>
+          <ul class="bullets">
+            <li>CAN bus sensor + telemetry prototype</li>
+            <li>EV-themed Raspberry Pi / BMS experiments</li>
+            <li>Semiconductor/device physics simulations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="projects" class="section">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <p class="muted">Search, filter by tag, and open reports/slides/media.</p>
+      </div>
+
+      <div class="controls">
+        <input id="search" type="search" placeholder="Search projects (e.g., CAN, MOSFET, Raspberry Pi)..." />
+        <div id="tagFilters" class="tag-filters"></div>
+      </div>
+
+      <div id="projectGrid" class="grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>About</h2>
+      </div>
+      <div class="card">
+        <p>
+          I’m a UC Berkeley EECS student interested in building practical systems that connect
+          theory to real hardware—especially semiconductors, embedded electronics, and EV-related tech.
+          I like projects with real constraints, clear measurements, and polished documentation.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <span class="muted">© <span id="year"></span> Huan Nguyen</span>
+      <span class="muted">Built on GitHub Pages</span>
+    </div>
+  </footer>
+
+  <script src="C:\Users\baohuan0412\Desktop\Website\project.js"></script>
+  <script src="C:\Users\baohuan0412\Desktop\Website\main.js"></script>
+</body>
+</html>
