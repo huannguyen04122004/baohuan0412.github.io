@@ -30,7 +30,7 @@ window.PROJECTS = [
     tags: ["Semiconductors", "Simulation", "TCAD"],
     image: "assets/img/project3.png",
     links: [
-      { label: "Write-up (PDF)", url: "ELENG-130_230A Final Project.pdf" }
+      { label: "Write-up (PDF)", url: "./ELENG-130_230A Final Project.pdf" }
     ]
   },
   {
