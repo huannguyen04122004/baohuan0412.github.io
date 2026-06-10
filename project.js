@@ -7,9 +7,8 @@ window.PROJECTS = [
     tags: ["PCB", "Automotive"],
     image: "assets/img/project1.png",
     links: [
-      { label: "Photo", url: "./PWM_3D_viewer.jpg" },
-      { label: "Slides (PDF)", url: "assets/docs/project1_slides.pdf" },
-      { label: "Code (GitHub)", url: "https://github.com/yourusername/yourrepo" }
+      { label: "Photo [3D]", url: "./PWM_3D_viewer.jpg" },
+      { label: "Photo [Floorplan]", url: "./PWM_floorplan.jpg" }
     ]
   },
   {
