@@ -14,12 +14,12 @@ window.PROJECTS = [
   {
     title: "CAN Bus Sensor",
     year: "2026",
-    description: "Unfinished project designing a CAN Bus network with different type of sensors through KiCad PCB. The nodes include a coolant temp node, IMU node and GPS node. Below is a completed pcb for the coolant temp node as an example of what the other two pcb nodes look like. I will be revisiting this project in the future.",
+    description: "This is my first ever PCB design but its an unfinished project designing a CAN Bus network with different type of sensors through KiCad PCB. The nodes include a coolant temp node, IMU node and GPS node. Below is a completed pcb for the coolant temp node as an example of what the other two pcb nodes look like. I will be revisiting this project in the future.",
     tags: ["PCB", "Automotive"],
     image: "assets/img/project2.png",
     links: [
-      { label: "Poster (PDF)", url: "assets/docs/project2_poster.pdf" },
-      { label: "Photos", url: "assets/img/project2.png" }
+      { label: "Photo [3D]", url: "./Temp_3D_viewer.jpeg" },
+      { label: "Photo [Floorplan]", url: "./Temp_floorplan.jpeg" }
     ]
   },
   {
@@ -39,7 +39,7 @@ window.PROJECTS = [
     tags: ["Python", "Simulation"],
     image: "assets/img/project3.png",
     links: [
-      { label: "Write-up (PDF)", url: "assets/docs/mosfet_writeup.pdf" }
+      { label: "Simulation Output Video", url: "https://youtube.com/shorts/N0FGvnUgUw4?si=cT19ZlzXKDZUXSHC" }
     ]
   }
   
