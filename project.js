@@ -6,7 +6,10 @@ window.PROJECTS = [
     description: "Built FreshTrack, a multi-user food inventory and expiration tracking web application designed to help employees keep track of prepared products and reduce expired inventory. Users can create accounts, record product names, storage locations, preparation and expiration timestamps, mark items as completed, and review or delete completed entries. The application uses Supabase for authentication and a shared PostgreSQL database, with Row Level Security enabled to protect application data.",
     tags: ["Web App", "JavaScript", "Supabase", "PostgreSQL"],
     image: "assets/img/freshtrack.png",
-    links: []
+    links: [
+      { label: "Photo [Website]", url: "./FreshTrack.png" },
+      { label: "Link [Sign up required]", url: "https://huannguyen04122004.github.io/freshtrack/" }
+    ]
   },
   {
     title: "+12V PWM Motor Speed Controller",
