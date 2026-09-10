@@ -1,6 +1,14 @@
 // Add projects here. Keep file paths inside /assets/ so GitHub Pages can serve them.
 window.PROJECTS = [
   {
+    title: "FreshTrack",
+    year: "2026",
+    description: "Built FreshTrack, a multi-user food inventory and expiration tracking web application designed to help employees keep track of prepared products and reduce expired inventory. Users can create accounts, record product names, storage locations, preparation and expiration timestamps, mark items as completed, and review or delete completed entries. The application uses Supabase for authentication and a shared PostgreSQL database, with Row Level Security enabled to protect application data.",
+    tags: ["Web App", "JavaScript", "Supabase", "PostgreSQL"],
+    image: "assets/img/freshtrack.png",
+    links: []
+  },
+  {
     title: "+12V PWM Motor Speed Controller",
     year: "2026",
     description: "Finished a PWM motor speed controller PCB using KiCad as an onboarding project for CalSol. I will revisit this project in the future for any potential improvements.",
@@ -42,5 +50,4 @@ window.PROJECTS = [
       { label: "Simulation Output Video", url: "https://youtube.com/shorts/N0FGvnUgUw4?si=cT19ZlzXKDZUXSHC" }
     ]
   }
-  
 ];
