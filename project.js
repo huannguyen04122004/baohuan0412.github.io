@@ -12,6 +12,15 @@ window.PROJECTS = [
     ]
   },
   {
+    title: "NMOS Integrated Circuit Fabrication and Electrical Characterization",
+    year: "2026",
+    description: "Fabricated an NMOS integrated circuit on a p-type silicon wafer in a semiconductor cleanroom, producing MOSFETs, logic gates, and test structures through a semester-long fabrication process as part of UC Berkeley’s EE143 (Microfabrication) course.
+    links: [
+      { label: "Write-up (PDF)", url: "./EE143 – NMOS Microfabrication & Process Characterization.pdf" },
+      { label: "Write-up (PDF)", url: "./EE143 – Semiconductor Device Electrical Characterization.pdf" }
+    ]
+  },
+  {
     title: "+12V PWM Motor Speed Controller",
     year: "2026",
     description: "Finished a PWM motor speed controller PCB using KiCad as an onboarding project for CalSol. I will revisit this project in the future for any potential improvements.",
