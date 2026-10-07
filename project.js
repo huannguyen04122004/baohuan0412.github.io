@@ -17,8 +17,8 @@ window.PROJECTS = [
     description: "Fabricated an NMOS integrated circuit on a p-type silicon wafer in a semiconductor cleanroom, producing MOSFETs, logic gates, and test structures through a semester-long fabrication process as part of UC Berkeley’s EE143 (Microfabrication) course.",
     tags: ["Microfabrication", "Process Engineer", "Photolithography", "Photoresist Spin Coating", "Thermal Oxidation", "Etching", "Dopant Diffusion", "Deposition", "Metallization", "Mask Alignment"],
     links: [
-      { label: "Write-up (PDF)", url: "./EE143 – NMOS Microfabrication & Process Characterization.pdf" },
-      { label: "Write-up (PDF)", url: "./EE143 – Semiconductor Device Electrical Characterization.pdf" }
+      { label: "Microfabrication & Process Characterization (PDF)", url: "./EE143 – NMOS Microfabrication & Process Characterization.pdf" },
+      { label: "Semiconductor Device Electrical Characterization (PDF)", url: "./EE143 – Semiconductor Device Electrical Characterization.pdf" }
     ]
   },
   {
