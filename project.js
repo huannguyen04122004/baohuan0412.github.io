@@ -12,6 +12,15 @@ window.PROJECTS = [
     ]
   },
   {
+    title: "GaAs Heterojunction Solar Cell Design & Optimization",
+    year: "2026",
+    description: "Designed and simulated a multilayer GaAs heterojunction solar cell using AFORS-HET, optimizing semiconductor layer thickness, emitter doping, and metal contacts to improve device performance. Analyzed energy band diagrams, I–V characteristics, and carrier recombination to evaluate solar cell efficiency. Conducted parameter sweeps and achieved a simulated power conversion efficiency of 25.04%, with an open-circuit voltage of 1.107 V and fill factor of 87.73%. Compared simulation results with published experimental data to assess device performance and modeling limitations.",
+    tags: ["AFORS-HET", "Semiconductors", "Simulation", "I–V Characterization", "Photovoltaics"],
+    links: [
+      { label: "GaAs Heterojunction Solar Cell (PDF)", url: "./EE134 Final Project.pdf" }
+    ]
+  },
+  {
     title: "NMOS Integrated Circuit Fabrication and Electrical Characterization",
     year: "2026",
     description: "Fabricated an NMOS integrated circuit on a p-type silicon wafer in a semiconductor cleanroom, producing MOSFETs, logic gates, and test structures through a semester-long fabrication process as part of UC Berkeley’s EE143 (Microfabrication) course.",
