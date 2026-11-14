@@ -1,5 +1,16 @@
 // Add projects here. Keep file paths inside /assets/ so GitHub Pages can serve them.
 window.PROJECTS = [
+    {
+    title: "MPPTs Interface PCB",
+    year: "2026",
+    description: "The Gen11 MPPT Interface PCB is designed to bridge communication between four Maximum Power Point Trackers (MPPTs), operating at 500 kbps, and the vehicle's main CAN bus, operating at 1 Mbps. This allows the rest of the vehicle's CAN network to operate at a higher communication speed without being limited by the MPPTs. The board interfaces with an ESP32-S3 development board to handle CAN message forwarding and translation. Additionally, the PCB is designed to provide 24 V-to-12 V power conversion and protection circuitry to support the MPPTs.",
+    tags: ["PCB Design", "KiCad", "CAN Bus", "ESP32-S3", "Embedded Systems", "Power Electronics"],
+    links: [
+      { label: "Schematic", url: "./MPPT_Interface_schematic.pdf" },
+      { label: "Photo [Floorplan]", url: "./MPPT_Interface_floorplan.png" }
+      { label: "Photo [3D]", url: "./MPPT_Interface_3D_viewer.png" },
+    ]
+  },
   {
     title: "FreshTrack",
     year: "2026",
