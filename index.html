@@ -3,90 +3,219 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Huan Nguyen | Portfolio</title>
-  <link rel="stylesheet" href="main.css"/>
+  <title>Huan Nguyen | Electrical Engineering Portfolio</title>
+  <meta name="description" content="Huan Nguyen, EECS student at UC Berkeley. PCB design for the CalSol solar car team, semiconductor device simulation and cleanroom fabrication." />
+  <meta property="og:title" content="Huan Nguyen | Electrical Engineering Portfolio" />
+  <meta property="og:description" content="PCB design, semiconductor devices and cleanroom fabrication projects from a UC Berkeley EECS student." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#F2F4F1" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/img/mppt-board-cutout.webp" as="image" />
+  <link rel="stylesheet" href="main.css" />
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-grid">
-      <div>
-        <p class="kicker">UC Berkeley EECS</p>
-        <h1>Huan Nguyen</h1>
-        <p class="subtitle">
-          Hello, I'm interested in working on various EE projects, specifically PCB design.
-          Here are some projects that I've completed or in-progress.
-          I am also working on other projects associated to Berkeley's clubs, please email me if you are interested in seeing what I'm working on for them.
-        </p>
+  <a class="skip-link" href="#projects">Skip to projects</a>
 
-        <div class="cta-row">
-          <a class="btn primary" href="#projects">View Projects</a>
-          <a class="btn" href="Huan Nguyen - Resume [EE].pdf" target="_blank" rel="noopener">Resume (PDF)</a>
-          <a class="btn" href="mailto:huannguyen04122004@gmail.com">Email</a>
-        </div>
-
-        <div class="link-row">
-          <a href="https://github.com/huannguyen04122004" target="_blank" rel="noopener">GitHub</a>
-          <span>•</span>
-          <a href="https://www.linkedin.com/in/huan-nguyen-eecs/" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
-
-      <div class="hero-card">
-        <img class="avatar" src="assets/img/headshot.jpg" alt="Headshot" onerror="this.style.display='none'">
-        <div class="hero-card-body">
-          <h2>Featured</h2>
-          <p class="muted">A quick highlight reel of what I’ve been building recently.</p>
-          <ul class="bullets">
-            <li>+12V PWM Motor Speed Controller [PCB]</li>
-            <li>FreshTrack [Web App / Supabase]</li>
-            <li>CAN Bus Sensor [PCBs]</li>
-            <li>Semiconductor/Device Physics Simulations [Synopsys' Sentaurus]</li>
-            <li>Thermal Driven Lava Lamp Fluid Dynamics Simulation [Python]</li>
-          </ul>
-        </div>
-      </div>
+  <header class="site-nav" id="top">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="#top" aria-label="Huan Nguyen, back to top">
+        <svg class="wordmark-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5"/><path d="M5.2 7v10M5.2 12h4.8M10 7v10M13.8 17V7l5 10V7"/></svg>
+        <span>Huan Nguyen</span>
+      </a>
+      <nav aria-label="Main">
+        <ul class="nav-links">
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="Huan Nguyen - Resume [EE].pdf" target="_blank" rel="noopener">Resume</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section id="projects" class="section">
-      <div class="section-head">
-        <h2>Projects</h2>
-        <p class="muted">Search, filter by tag, and open reports/slides/media.</p>
-      </div>
+  <main>
+    <section class="hero" aria-labelledby="hero-name">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <h1 id="hero-name" class="hero-name">
+            <span class="line"><span>Huan</span></span>
+            <span class="line"><span>Nguyen</span></span>
+          </h1>
+          <p class="hero-lede">
+            Electrical engineering student at UC Berkeley. I design PCBs for the CalSol solar car team
+            and work on semiconductor devices, from TCAD simulation to fabricating NMOS circuits in the cleanroom.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">See projects</a>
+            <a class="btn" href="Huan Nguyen - Resume [EE].pdf" target="_blank" rel="noopener">Download resume</a>
+            <a class="btn" href="mailto:huannguyen04122004@gmail.com">Email me</a>
+          </div>
+          <p class="hero-social">
+            <a href="https://github.com/huannguyen04122004" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/huan-nguyen-eecs/" target="_blank" rel="noopener">LinkedIn</a>
+          </p>
+        </div>
 
-      <div class="controls">
-        <input id="search" type="search" placeholder="Search projects..." />
-        <div id="tagFilters" class="tag-filters"></div>
+        <figure class="hero-board" aria-label="MPPT Interface PCB">
+          <svg class="traces" viewBox="0 0 600 640" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="fade-left" gradientUnits="userSpaceOnUse" x1="-70" y1="0" x2="10" y2="0">
+                <stop offset="0" stop-color="#b56a2c" stop-opacity="0" />
+                <stop offset="1" stop-color="#b56a2c" />
+              </linearGradient>
+            </defs>
+            <g class="bus bus-left">
+              <path pathLength="1" d="M-70 470 H-10 L120 340 H162" />
+              <path pathLength="1" d="M-70 486 H-3.4 L126.6 356 H162" />
+              <path pathLength="1" d="M-70 502 H3.2 L133.2 372 H162" />
+              <path pathLength="1" d="M-70 518 H9.8 L139.8 388 H162" />
+            </g>
+            <g class="bus bus-right">
+              <path pathLength="1" d="M720 214 H560 L520 254 H476" />
+              <path pathLength="1" d="M720 230 H566.6 L526.6 270 H476" />
+              <path pathLength="1" d="M720 246 H573.2 L533.2 286 H476" />
+            </g>
+            <g class="bus bus-top">
+              <path pathLength="1" d="M720 -40 L640 40 H420 V130" />
+              <path pathLength="1" d="M720 -24 L648 48 H436 V130" />
+            </g>
+            <g class="pulse">
+              <path pathLength="1" d="M-70 470 H-10 L120 340 H162" />
+              <path pathLength="1" d="M720 230 H566.6 L526.6 270 H476" />
+            </g>
+            <g class="vias">
+              <circle cx="162" cy="340" r="6" /><circle cx="162" cy="356" r="6" />
+              <circle cx="162" cy="372" r="6" /><circle cx="162" cy="388" r="6" />
+              <circle cx="476" cy="254" r="6" /><circle cx="476" cy="270" r="6" /><circle cx="476" cy="286" r="6" />
+            </g>
+          </svg>
+          <div class="board-tilt">
+            <img class="board" src="assets/img/mppt-board-cutout.webp" width="649" height="1135"
+                 alt="3D render of the MPPT Interface PCB with an ESP32-S3 module mounted on top" />
+          </div>
+          <figcaption>MPPT Interface PCB for CalSol, KiCad 3D render</figcaption>
+        </figure>
       </div>
-
-      <div id="projectGrid" class="grid"></div>
     </section>
 
-    <section class="section">
-      <div class="section-head">
-        <h2>About</h2>
+    <section id="projects" class="section projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="projects-title">Projects</h2>
+          <p class="section-intro" id="projects-count">Board design, device physics and the software I've built along the way.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter projects by area" id="filters"></div>
+          <label class="search">
+            <span class="visually-hidden">Search projects</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>
+            <input id="search" type="search" placeholder="Search tools, courses, specs" autocomplete="off" />
+          </label>
+        </div>
+
+        <p class="visually-hidden" aria-live="polite" id="results-status"></p>
+        <div class="project-list" id="project-list"></div>
+        <div class="empty" id="empty" hidden>
+          <p>No projects match “<span id="empty-query"></span>”.</p>
+          <button class="btn" type="button" id="clear-search">Clear search</button>
+        </div>
       </div>
-      <div class="card">
+    </section>
+
+    <section id="about" class="section about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <h2 id="about-title">About</h2>
+        <div class="about-body">
+          <p class="about-lede">
+            I'm an EECS student at UC Berkeley, drawn to the device-level foundations of modern electronics.
+            Courses like EE130 got me hooked on semiconductor physics and the fields built on it, including
+            integrated-circuit devices and fabrication.
+          </p>
+          <p>
+            I enjoy seeing how physical principles turn into real devices and systems, and I'm looking for
+            research, coursework and hands-on projects that keep me close to that. I've also always wanted to
+            work as an electrical engineer in the automotive industry.
+          </p>
+
+          <div class="about-cols">
+            <div>
+              <h3>Teams</h3>
+              <ul>
+                <li><strong>CalSol Solar Vehicle Team</strong><span>Electrical engineer, MPPT Interface project lead</span></li>
+                <li><strong>Formula Electric at Berkeley</strong><span>General member</span></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Coursework</h3>
+              <ul class="plain">
+                <li>Integrated-Circuit Devices (EE130)</li>
+                <li>Microfabrication Technology (EE143)</li>
+                <li>Photovoltaic Devices (EE134)</li>
+                <li>Microelectronic Devices and Circuits</li>
+                <li>Signals and Systems</li>
+                <li>Machine Structures</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Tools</h3>
+              <ul class="plain">
+                <li>KiCad, LTspice</li>
+                <li>Sentaurus TCAD, AFORS-HET</li>
+                <li>Cleanroom processing</li>
+                <li>ESP32, CAN bus, embedded C</li>
+                <li>Python, C++, Java</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-inner">
+        <h2 id="contact-title">Let's talk</h2>
         <p>
-          Hello! I am an EECS student at UC Berkeley with a strong interest in the device-level foundations of modern electronics.
-          Through coursework such as EE130, I have become increasingly interested in semiconductor physics and the fields that build upon it, 
-          including integrated circuit devices and fabrication technologies.
-          I enjoy exploring how physical principles translate into real-world devices and systems, 
-          and I am eager to continue learning through advanced coursework, research, and hands-on projects.
-          I am currently seeking opportunities to further develop my understanding of semiconductor-driven technologies and their applications. 
-          Additionally, I have always wanted to work in the automotive field for electrical engineer.
+          I'm looking for electrical engineering roles in PCB design, semiconductors and automotive electronics.
+          Some of my club work for Berkeley teams isn't public yet, so email me if you'd like to see it.
         </p>
+        <a class="contact-email" href="mailto:huannguyen04122004@gmail.com">huannguyen04122004@gmail.com</a>
+        <ul class="contact-links">
+          <li><a href="https://www.linkedin.com/in/huan-nguyen-eecs/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/huannguyen04122004" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="Huan Nguyen - Resume [EE].pdf" target="_blank" rel="noopener">Resume (PDF)</a></li>
+        </ul>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-row">
-      <span class="muted">© <span id="year"></span> Huan Nguyen</span>
-      <span class="muted">Built on GitHub Pages</span>
+    <div class="wrap footer-inner">
+      <span>© <span id="year">2026</span> Huan Nguyen</span>
+      <a href="#top">Back to top</a>
     </div>
   </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Project photos">
+    <div class="lightbox-frame">
+      <img id="lightbox-img" alt="" />
+      <div class="lightbox-bar">
+        <p id="lightbox-caption"></p>
+        <span id="lightbox-count"></span>
+      </div>
+    </div>
+    <button class="lb-btn lb-close" type="button" id="lightbox-close" aria-label="Close photos">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>
+    </button>
+    <button class="lb-btn lb-prev" type="button" id="lightbox-prev" aria-label="Previous photo">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4l-6 6 6 6"/></svg>
+    </button>
+    <button class="lb-btn lb-next" type="button" id="lightbox-next" aria-label="Next photo">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4l6 6-6 6"/></svg>
+    </button>
+  </dialog>
 
   <script src="project.js"></script>
   <script src="main.js"></script>
