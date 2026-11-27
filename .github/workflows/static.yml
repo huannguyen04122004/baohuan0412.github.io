@@ -3,16 +3,16 @@ name: Build boards and deploy to Pages
 
 on:
   push:
-    branches: ["main", "ci/**"]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages-${{ github.ref }}"
+  group: "pages"
   cancel-in-progress: false
 
 env:
@@ -63,7 +63,7 @@ jobs:
               --compress meshopt --simplify false --texture-compress false \
               --palette false --flatten false --join-named false --instance false || cp "$raw" "$glb"
             ls -la "$raw" "$glb"
-            if [[ "$GITHUB_REF" == refs/heads/ci/* ]]; then mv "$raw" "${raw%.raw.glb}.kicad-raw.glb"; else rm "$raw"; fi
+            rm "$raw"
           done
 
       - name: Keep build files out of the site
@@ -77,15 +77,6 @@ jobs:
             boards/*.glb
             boards/*.models.json
           if-no-files-found: warn
-
-      # Test branches only: publish the generated models to a scratch branch for inspection
-      - name: Push models to scratch branch (ci/** only)
-        if: startsWith(github.ref, 'refs/heads/ci/')
-        run: |
-          mkdir /tmp/out && cp boards/*.glb boards/*.models.json /tmp/out/ 2>/dev/null || true
-          cd /tmp/out && git init -q -b models && git add . \
-            && git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "models" \
-            && git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" models:ci-models
 
       - name: Setup Pages
         if: github.ref == 'refs/heads/main'
