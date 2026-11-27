@@ -1,0 +1,4 @@
+# Built by the GitHub Action, not committed
+boards/*.glb
+boards/*.models.json
+.kicad-3d/

@@ -101,6 +101,9 @@ export class BoardView3D {
     key.shadow.radius = 4;
     scene.add(key);
     scene.add(new THREE.HemisphereLight("#eef4ff", "#20302a", 0.35));
+    const under = new THREE.DirectionalLight("#f4f7ff", 0.9);   // soft light for the underside
+    under.position.set(0.4 * this.size, -0.3 * this.size, -1.2 * this.size);
+    scene.add(under);
 
     this.camera = new THREE.PerspectiveCamera(30, 1, 1, this.size * 20);
     this.camera.up.set(0, 0, 1);
@@ -113,6 +116,8 @@ export class BoardView3D {
     this.controls.addEventListener("start", () => { this.tween = null; this.onInteract?.(); });
 
     this.mat = makeMaterials();
+    this.boardGroup = new THREE.Group();
+    scene.add(this.boardGroup);
     this.buildBoard();
     this.parts = new THREE.Group();
     scene.add(this.parts);
@@ -152,7 +157,7 @@ export class BoardView3D {
     body.translate(0, 0, -t / 2);
     const bodyMesh = new THREE.Mesh(body, [this.mat.fr4, this.mat.fr4]);
     bodyMesh.receiveShadow = true;
-    this.scene.add(bodyMesh);
+    this.boardGroup.add(bodyMesh);
 
     // painted surfaces
     const maxTex = this.renderer.capabilities.maxTextureSize;
@@ -180,7 +185,7 @@ export class BoardView3D {
       const mesh = new THREE.Mesh(capGeo, mat);
       mesh.position.z = side === "F" ? t / 2 + 0.003 : -t / 2 - 0.003;
       mesh.receiveShadow = true;
-      this.scene.add(mesh);
+      this.boardGroup.add(mesh);
     }
 
     // plated barrels
@@ -195,14 +200,16 @@ export class BoardView3D {
         m.makeScale(h.r * 0.995, h.r * 0.995, 1).setPosition(X, Y, 0);
         inst.setMatrixAt(i, m);
       });
-      this.scene.add(inst);
+      this.boardGroup.add(inst);
     }
   }
 
   /* ---------- parts ---------- */
-  buildParts() {
+  buildParts(only = null, partial = new Set()) {
     for (const fp of this.board.footprints) {
+      if (only && !only.has(fp.ref)) continue;
       const rule = ruleFor(fp, this.overrides);
+      if (partial.has(fp.ref)) rule.partial = true;
       if (rule.kind === "none" || !this[`part_${rule.kind}`]) continue;
       const g = new THREE.Group();
       this[`part_${rule.kind}`](g, fp, rule);
@@ -332,14 +339,19 @@ export class BoardView3D {
 
   part_socket(g, fp, r) { this.sockets(g, fp, r.height || 8.5); }
 
-  sockets(g, fp, h) {
-    // one socket strip per column of through-hole pads
+  columns(fp) {
     const cols = new Map();
     for (const p of fp.pads.filter((p) => p.type === "thru_hole")) {
       const key = Math.round(p.local[0] * 10) / 10;
       if (!cols.has(key)) cols.set(key, []);
       cols.get(key).push(p);
     }
+    return cols;
+  }
+
+  sockets(g, fp, h) {
+    // one socket strip per column of through-hole pads
+    const cols = this.columns(fp);
     const holeGeo = new THREE.BoxGeometry(0.9, 0.9, 0.04);
     for (const [x, pads] of cols) {
       const ys = pads.map((p) => p.local[1]);
@@ -357,7 +369,8 @@ export class BoardView3D {
   // A dev board plugged into two socket strips, e.g. an ESP32 DevKit
   part_devkit(g, fp, r) {
     const h = r.height || 11.1;
-    const cols = this.sockets(g, fp, 8.5);
+    // when KiCad already supplied the socket models, draw only the board that plugs into them
+    const cols = r.partial ? this.columns(fp) : this.sockets(g, fp, 8.5);
     const b = this.bodyBox(fp, "fab");
     const W = b.x1 - b.x0, D = b.y1 - b.y0;
 
@@ -430,6 +443,57 @@ export class BoardView3D {
     }
   }
 
+  /* ---------- KiCad's own 3D export (built by the GitHub Action) ---------- */
+  async loadKicadModel(url, manifest) {
+    const loader = new THREE.GLTFLoader();
+    loader.setMeshoptDecoder(THREE.MeshoptDecoder);
+    const gltf = await loader.loadAsync(url);
+    const model = gltf.scene;
+
+    // KiCad writes metres, Y up, board y along +Z. Convert to this view: millimetres, Z up, centred.
+    const wrap = new THREE.Group();
+    wrap.add(model);
+    wrap.scale.setScalar(1000);
+    wrap.rotation.x = Math.PI / 2;
+    wrap.position.set(-this.cx, this.cy, -this.t / 2);
+
+    const refs = new Set();
+    const tuned = new Set();
+    model.traverse((o) => {
+      if (o.name && this.board.footprints.some((f) => f.ref === o.name)) refs.add(o.name);
+      if (!o.isMesh) return;
+      o.castShadow = true;
+      o.receiveShadow = true;
+      for (const m of [].concat(o.material)) {
+        if (tuned.has(m)) continue;
+        tuned.add(m);
+        // KiCad stores display (sRGB) colour values where glTF expects linear ones; convert so colours match KiCad
+        if (m.color) m.color.convertSRGBToLinear();
+        // KiCad marks most model colours as rough metal, which renders dull and dark: treat those as plastic
+        if (m.metalness > 0.9 && m.roughness > 0.9) { m.metalness = 0; m.roughness = 0.55; }
+        if (m.transparent && m.opacity > 0.75) {
+          m.depthWrite = true;
+          // soldermask: KiCad's is quite see-through, which washes the board out over the pale laminate
+          const c = m.color;
+          if (c.g > c.r && c.g >= c.b && c.r + c.g + c.b < 0.5) { m.opacity = 0.92; m.roughness = 0.45; }
+        }
+        m.needsUpdate = true;
+      }
+    });
+    // tag each part's root so the Parts toggle can hide it
+    model.children.forEach((c) => { if (refs.has(c.name)) c.userData.part = true; });
+
+    const missing = new Set(Object.keys((manifest && manifest.missing) || {}));
+    // swap: KiCad board replaces the painted one; keep stand-ins only for parts without a model
+    this.boardGroup.visible = false;
+    this.scene.add(wrap);
+    this.kicadModel = model;
+    for (const g of [...this.parts.children]) this.parts.remove(g);
+    this.buildParts(missing, new Set([...missing].filter((r) => refs.has(r))));
+    this.needsRender = true;
+    return { refs, missing };
+  }
+
   /* ---------- camera ---------- */
   fitDistance() {
     // distance at which the whole board fits the current viewport, looking straight down
@@ -482,7 +546,11 @@ export class BoardView3D {
     this.tween = { t0: performance.now(), dur: 1800, fromPos: this.camera.position.clone(), toPos: new THREE.Vector3(...p.pos), fromT: new THREE.Vector3(0, 0, 0), toT: new THREE.Vector3(...p.target) };
   }
 
-  setPartsVisible(on) { this.parts.visible = on; this.needsRender = true; }
+  setPartsVisible(on) {
+    this.parts.visible = on;
+    if (this.kicadModel) this.kicadModel.children.forEach((c) => { if (c.userData.part) c.visible = on; });
+    this.needsRender = true;
+  }
   setEnabled(on) { this.controls.enabled = on; }
 
   resize() {
