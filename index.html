@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#F2F4F1" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/img/mppt-board-cutout.webp" as="image" />
+  <link rel="preload" href="boards/MPPT_Interface.render.webp" as="image" />
   <link rel="stylesheet" href="main.css" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -67,33 +67,35 @@
               </linearGradient>
             </defs>
             <g class="bus bus-left">
-              <path pathLength="1" d="M-70 470 H-10 L120 340 H162" />
-              <path pathLength="1" d="M-70 486 H-3.4 L126.6 356 H162" />
-              <path pathLength="1" d="M-70 502 H3.2 L133.2 372 H162" />
-              <path pathLength="1" d="M-70 518 H9.8 L139.8 388 H162" />
+              <path pathLength="1" d="M-70 470 H-32 L98 340 H132" />
+              <path pathLength="1" d="M-70 486 H-25.4 L104.6 356 H128" />
+              <path pathLength="1" d="M-70 502 H-18.8 L111.2 372 H124" />
+              <path pathLength="1" d="M-70 518 H-12.2 L117.8 388 H120" />
             </g>
             <g class="bus bus-right">
-              <path pathLength="1" d="M720 214 H560 L520 254 H476" />
-              <path pathLength="1" d="M720 230 H566.6 L526.6 270 H476" />
-              <path pathLength="1" d="M720 246 H573.2 L533.2 286 H476" />
+              <path pathLength="1" d="M720 214 H560 L520 254 H512" />
+              <path pathLength="1" d="M720 230 H566.6 L526.6 270 H508" />
+              <path pathLength="1" d="M720 246 H573.2 L533.2 286 H504" />
             </g>
             <g class="bus bus-top">
               <path pathLength="1" d="M720 -40 L640 40 H420 V130" />
               <path pathLength="1" d="M720 -24 L648 48 H436 V130" />
             </g>
             <g class="pulse">
-              <path pathLength="1" d="M-70 470 H-10 L120 340 H162" />
-              <path pathLength="1" d="M720 230 H566.6 L526.6 270 H476" />
+              <path pathLength="1" d="M-70 470 H-32 L98 340 H132" />
+              <path pathLength="1" d="M720 230 H566.6 L526.6 270 H508" />
             </g>
             <g class="vias">
-              <circle cx="162" cy="340" r="6" /><circle cx="162" cy="356" r="6" />
-              <circle cx="162" cy="372" r="6" /><circle cx="162" cy="388" r="6" />
-              <circle cx="476" cy="254" r="6" /><circle cx="476" cy="270" r="6" /><circle cx="476" cy="286" r="6" />
+              <circle cx="132" cy="340" r="6" /><circle cx="128" cy="356" r="6" />
+              <circle cx="124" cy="372" r="6" /><circle cx="120" cy="388" r="6" />
+              <circle cx="512" cy="254" r="6" /><circle cx="508" cy="270" r="6" /><circle cx="504" cy="286" r="6" />
             </g>
           </svg>
           <div class="board-tilt">
-            <img class="board" src="assets/img/mppt-board-cutout.webp" width="649" height="1135"
-                 alt="3D render of the MPPT Interface PCB with an ESP32-S3 module mounted on top" />
+            <!-- Rendered by KiCad from boards/MPPT_Interface.kicad_pcb on every deploy (see .github/workflows) -->
+            <img class="board" src="boards/MPPT_Interface.render.webp" width="861" height="1200"
+                 onerror="this.onerror=null;this.src='assets/img/mppt-board-cutout.webp';this.width=649;this.height=1135;this.parentNode.classList.add('is-fallback')"
+                 alt="3D render of the MPPT Interface PCB with an ESP32-S3 dev board mounted on top" />
           </div>
           <figcaption>MPPT Interface PCB for CalSol, KiCad 3D render</figcaption>
         </figure>

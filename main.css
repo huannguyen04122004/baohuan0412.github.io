@@ -155,9 +155,12 @@ button { font: inherit; color: inherit; }
 .traces .vias circle { fill: var(--paper); stroke: var(--copper); stroke-width: 4; transform-box: fill-box; transform-origin: center; }
 
 .board-tilt {
-  position: absolute; left: 27.5%; top: 6.5%; width: 50%;
+  position: absolute; left: 12%; top: 0%; width: 76%;
   perspective: 900px;
 }
+.board-tilt.is-fallback { left: 27.5%; top: 6.5%; width: 50%; }
+/* KiCad's render already carries its own floor shadow */
+.board-tilt:not(.is-fallback) .board { filter: drop-shadow(0 18px 24px rgba(18, 40, 30, .12)); }
 .board {
   width: 100%; height: auto;
   filter: drop-shadow(0 28px 30px rgba(18, 40, 30, .28)) drop-shadow(0 6px 8px rgba(18, 40, 30, .18));

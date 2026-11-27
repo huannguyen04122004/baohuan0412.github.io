@@ -17,6 +17,8 @@ concurrency:
 
 env:
   KICAD_IMAGE: kicad/kicad:10.0
+  # camera for the hero picture: tilt (x), spin (z) in degrees, as KiCad's --rotate x,y,z
+  HERO_ROTATE: "-35,25,-12"
 
 jobs:
   build:
@@ -51,6 +53,28 @@ jobs:
                 --output "$out" "$pcb"
             ls -la "$out"
             echo "::endgroup::"
+          done
+
+      # Picture for the top of the page, rendered by KiCad's raytracer from the current board
+      - name: Render hero images with KiCad
+        continue-on-error: true
+        run: |
+          shopt -s nullglob
+          pip install --quiet pillow
+          for pcb in boards/*.kicad_pcb; do
+            png="${pcb%.kicad_pcb}.render.png"
+            docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+              -v "$PWD:/work" -w /work \
+              -e KICAD10_3DMODEL_DIR=/work/.kicad-3d \
+              "$KICAD_IMAGE" \
+              kicad-cli pcb render \
+                --define-var KIPRJMOD=/work/boards \
+                --define-var KICAD10_3DMODEL_DIR=/work/.kicad-3d \
+                --side top --background transparent --quality high \
+                --rotate "$HERO_ROTATE" --zoom 1 --width 1800 --height 1800 \
+                --output "$png" "$pcb"
+            python3 .github/scripts/trim_render.py "$png" "${pcb%.kicad_pcb}.render.webp"
+            rm -f "$png"
           done
 
       - name: Compress GLB files
