@@ -62,7 +62,7 @@ jobs:
             npx --yes @gltf-transform/cli@4 optimize "$raw" "$glb" \
               --compress meshopt --simplify false --texture-compress false || cp "$raw" "$glb"
             ls -la "$raw" "$glb"
-            rm "$raw"
+            if [[ "$GITHUB_REF" == refs/heads/ci/* ]]; then mv "$raw" "${raw%.raw.glb}.kicad-raw.glb"; else rm "$raw"; fi
           done
 
       - name: Keep build files out of the site
