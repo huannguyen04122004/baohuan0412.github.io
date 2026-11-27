@@ -64,6 +64,17 @@ jobs:
               --palette false --flatten false --join-named false --instance false || cp "$raw" "$glb"
             ls -la "$raw" "$glb"
             rm "$raw"
+            # fingerprint the model so browsers never pair a new manifest with an old cached GLB
+            python3 - "$glb" <<'PY'
+          import hashlib, json, sys, pathlib
+          glb = pathlib.Path(sys.argv[1])
+          man = glb.with_name(glb.name[:-4] + ".models.json")
+          data = json.loads(man.read_text()) if man.exists() else {}
+          data["glb"] = glb.name
+          data["version"] = hashlib.sha256(glb.read_bytes()).hexdigest()[:16]
+          man.write_text(json.dumps(data, indent=2))
+          print("fingerprint", data["version"])
+          PY
           done
 
       - name: Keep build files out of the site

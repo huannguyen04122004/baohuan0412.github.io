@@ -457,10 +457,18 @@ export class BoardView3D {
     wrap.rotation.x = Math.PI / 2;
     wrap.position.set(-this.cx, this.cy, -this.t / 2);
 
+    // Parts are the direct children of KiCad's root node, named by reference designator.
+    // (Only look at that level: part models such as a dev board carry their own C1, R1, U1... inside.)
+    const boardRefs = new Set(this.board.footprints.map((f) => f.ref));
+    const top = model.children.length === 1 && !model.children[0].isMesh ? model.children[0] : model;
     const refs = new Set();
+    this.kicadParts = [];
+    for (const c of top.children) {
+      const name = c.userData.name ?? c.name;      // GLTFLoader keeps the original name here
+      if (boardRefs.has(name)) { refs.add(name); this.kicadParts.push(c); }
+    }
     const tuned = new Set();
     model.traverse((o) => {
-      if (o.name && this.board.footprints.some((f) => f.ref === o.name)) refs.add(o.name);
       if (!o.isMesh) return;
       o.castShadow = true;
       o.receiveShadow = true;
@@ -480,10 +488,10 @@ export class BoardView3D {
         m.needsUpdate = true;
       }
     });
-    // tag each part's root so the Parts toggle can hide it
-    model.children.forEach((c) => { if (refs.has(c.name)) c.userData.part = true; });
 
     const missing = new Set(Object.keys((manifest && manifest.missing) || {}));
+    // safety net: any part that has a model in the board file but isn't in this export gets a stand-in
+    for (const f of this.board.footprints) if (f.models.length && f.ref && !refs.has(f.ref)) missing.add(f.ref);
     // swap: KiCad board replaces the painted one; keep stand-ins only for parts without a model
     this.boardGroup.visible = false;
     this.scene.add(wrap);
@@ -548,7 +556,7 @@ export class BoardView3D {
 
   setPartsVisible(on) {
     this.parts.visible = on;
-    if (this.kicadModel) this.kicadModel.children.forEach((c) => { if (c.userData.part) c.visible = on; });
+    for (const c of this.kicadParts || []) c.visible = on;
     this.needsRender = true;
   }
   setEnabled(on) { this.controls.enabled = on; }

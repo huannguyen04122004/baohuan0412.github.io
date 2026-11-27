@@ -55,7 +55,7 @@
       const file = p.board.pcb.split("/").pop();
       media = el("figure", { class: "project-board" }, [
         host,
-        el("figcaption", { class: "pcb-caption", text: `Rendered live in the browser from ${file}. Component bodies are simplified stand-ins.` })
+        el("figcaption", { class: "pcb-caption", text: `Rendered live in the browser from ${file}.` })
       ]);
     } else if (gallery.length) {
       media = el("button", {

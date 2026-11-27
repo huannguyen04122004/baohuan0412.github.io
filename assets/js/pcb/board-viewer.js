@@ -61,7 +61,7 @@ export async function mountBoardViewer(root, config) {
   const stage = $(".pcb-stage"), status = $(".pcb-status"), statusText = $(".pcb-status-text");
   const tip = $(".pcb-tip"), toast = $(".pcb-toast"), hint = $(".pcb-hint");
   const pane3d = $('[data-pane="3d"]'), pane2d = $('[data-pane="2d"]');
-  let mode = "3d", view3d = null, view2d = null, board = null, active = !coarse;
+  let mode = "3d", view3d = null, view2d = null, board = null, active = !coarse, usedKicadModel = null;
 
   const hints = {
     "3d": coarse ? "Drag to rotate, pinch to zoom" : `Drag to rotate, right-drag to pan, ${isMac ? "⌘" : "Ctrl"} + scroll to zoom`,
@@ -98,9 +98,10 @@ export async function mountBoardViewer(root, config) {
         if (res.ok) {
           const manifest = await res.json();
           statusText.textContent = "Loading 3D models";
-          await view3d.loadKicadModel(`${base}.glb`, manifest);
+          const v = manifest.version ? `?v=${encodeURIComponent(manifest.version)}` : `?t=${Date.now()}`;
+          await view3d.loadKicadModel(`${base}.glb${v}`, manifest);
           root.classList.add("has-kicad-model");
-          root.dataset.missingModels = Object.keys(manifest.missing || {}).length;
+          usedKicadModel = Object.keys(manifest.missing || {}).length ? "partial" : "full";
         }
       } catch (err) {
         console.warn("KiCad 3D export not used:", err);
@@ -252,6 +253,14 @@ export async function mountBoardViewer(root, config) {
   setActive(active);
   status.classList.add("is-done");
   root.classList.add("is-ready");
+  const caption = root.closest("figure")?.querySelector(".pcb-caption");
+  if (caption && view3d) {
+    caption.textContent = usedKicadModel === "full"
+      ? `Rendered live in the browser from ${fileName}, with 3D models exported by KiCad.`
+      : usedKicadModel === "partial"
+        ? `Rendered live in the browser from ${fileName}. Parts without a 3D model are shown as simplified shapes.`
+        : `Rendered live in the browser from ${fileName}. Component bodies are simplified stand-ins.`;
+  }
   // a single settle-in move the first time the board is on screen
   if (view3d) {
     const io = new IntersectionObserver((entries) => {
