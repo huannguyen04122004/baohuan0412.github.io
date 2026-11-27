@@ -48,11 +48,6 @@ window.PROJECTS = [
         "J1": { kind: "connector", height: 7.5, color: "#cfcfcb" }
       }
     },
-    gallery: [
-      { src: "MPPT_Interface_3D_viewer.png", caption: "KiCad 3D view with the ESP32-S3 board mounted" },
-      { src: "MPPT_Interface_floorplan.png", caption: "PCB layout" }
-    ],
-    links: [{ label: "Schematic (PDF)", url: "MPPT_Interface_schematic.pdf" }]
   },
   {
     title: "+12 V PWM Motor Speed Controller",
