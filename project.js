@@ -38,6 +38,16 @@ window.PROJECTS = [
     ],
     tags: ["KiCad", "CAN bus", "ESP32-S3", "Embedded systems", "Power electronics"],
     cover: "assets/img/cards/mppt.webp",
+    // Interactive board viewer. Drop an updated .kicad_pcb into boards/ and the site redraws it.
+    // "parts" fine-tunes the simplified 3D bodies by reference designator (kind, height in mm, color).
+    board: {
+      pcb: "boards/MPPT_Interface.kicad_pcb",
+      parts: {
+        "ESP32 Dev": { kind: "devkit", height: 11.1, color: "#2b6a46", label: "ESP32-S3 DevKit" },
+        "U1 [Buck]": { kind: "box", height: 4.2, color: "#1f9a3c" },
+        "J1": { kind: "connector", height: 7.5, color: "#cfcfcb" }
+      }
+    },
     gallery: [
       { src: "MPPT_Interface_3D_viewer.png", caption: "KiCad 3D view with the ESP32-S3 board mounted" },
       { src: "MPPT_Interface_floorplan.png", caption: "PCB layout" }

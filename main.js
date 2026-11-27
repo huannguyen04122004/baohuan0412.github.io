@@ -47,7 +47,17 @@
     const img = el("img", { src: href(p.cover || ""), alt: "", loading: index < 2 ? "eager" : "lazy", decoding: "async" });
     img.addEventListener("error", () => { img.style.visibility = "hidden"; });
 
-    if (gallery.length) {
+    if (p.board && p.board.pcb) {
+      // interactive KiCad viewer (mounted lazily, see mountBoards below)
+      const host = el("div", { class: "pcb-host", "data-board": String(index) }, [
+        el("img", { class: "pcb-poster", src: href(p.cover || ""), alt: "", decoding: "async" })
+      ]);
+      const file = p.board.pcb.split("/").pop();
+      media = el("figure", { class: "project-board" }, [
+        host,
+        el("figcaption", { class: "pcb-caption", text: `Rendered live in the browser from ${file}. Component bodies are simplified stand-ins.` })
+      ]);
+    } else if (gallery.length) {
       media = el("button", {
         class: "project-media",
         type: "button",
@@ -60,7 +70,7 @@
     } else {
       media = el("div", { class: "project-media is-static" }, [img]);
     }
-    if (p.coverFit === "contain") media.classList.add("fit-contain");
+    if (p.coverFit === "contain" && !p.board) media.classList.add("fit-contain");
 
     const meta = el("div", { class: "project-meta" });
     meta.append(el("span", { class: "year", text: p.year }));
@@ -84,6 +94,11 @@
       actions.append(el("a", { class: "doc-link", href: href(l.url), target: "_blank", rel: "noopener" },
         [icon(isPdf(l.url) ? ICONS.doc : ICONS.external), l.label]));
     });
+    if (p.board && gallery.length) {
+      const b = el("button", { class: "doc-link as-button", type: "button" }, [icon(ICONS.photos), `KiCad renders (${gallery.length})`]);
+      b.addEventListener("click", () => Lightbox.open(gallery, 0, b));
+      actions.append(b);
+    }
 
     let details = null;
     if (p.details && p.details !== p.summary) {
@@ -112,7 +127,7 @@
       details
     ]);
 
-    const article = el("article", { class: "project", "data-category": p.category, "aria-label": p.title }, [media, body]);
+    const article = el("article", { class: p.board ? "project project--board" : "project", "data-category": p.category, "aria-label": p.title }, [media, body]);
     article.style.viewTransitionName = `project-${index}`;
     article._search = searchText(p);
     return article;
@@ -120,6 +135,23 @@
 
   const rows = projects.map(buildProject);
   list.append(...rows);
+
+  /* ---------- Interactive board viewers: load only when they come near the screen ---------- */
+  const boardHosts = [...list.querySelectorAll(".pcb-host")];
+  if (boardHosts.length) {
+    const mount = (host) => {
+      const p = projects[Number(host.dataset.board)];
+      import("./assets/js/pcb/board-viewer.js")
+        .then((m) => m.mountBoardViewer(host, p.board))
+        .catch((err) => { console.error(err); host.classList.add("pcb-failed"); });
+    };
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); mount(e.target); } });
+      }, { rootMargin: "600px 0px" });
+      boardHosts.forEach((h) => io.observe(h));
+    } else boardHosts.forEach(mount);
+  }
 
   /* ---------- Filters ---------- */
   const counts = CATEGORIES.map((c) => [c, projects.filter((p) => p.category === c).length]).filter(([, n]) => n > 0);
