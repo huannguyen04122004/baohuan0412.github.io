@@ -23,7 +23,7 @@ window.PROJECTS = [
     title: "MPPT Interface PCB",
     category: "PCB design",
     year: "2026",
-    status: "In progress",
+    status: "Complete",
     org: "CalSol Solar Vehicle Team",
     summary:
       "Bridges four solar MPPT controllers on a 500 kbps CAN bus to the car's 1 Mbps main bus, with 24 V to 12 V power conversion on the same board.",
